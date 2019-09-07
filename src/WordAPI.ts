@@ -35,18 +35,16 @@ async function fetchTokensFromURL(
   const content = document.querySelector('#content')!;
   const text = content.textContent || '';
   const tokens = tokenizer.tokenize(text);
-  const words = tokens
-    .filter(token => token.pos === TokenPos.NOUN)
-    .map(getWordFromToken);
+  const words = tokens.map(getWordFromToken);
   return createOk(words);
 }
 
 function getWordFromToken(token: IpadicFeatures): Word {
   switch (token.pos) {
     case TokenPos.NOUN:
-      return { type: WordType.HIGHLIGHT, value: token.basic_form };
+      return { type: WordType.HIGHLIGHT, value: token.surface_form };
     default:
-      return { type: WordType.DEFAULT, value: token.basic_form };
+      return { type: WordType.DEFAULT, value: token.surface_form };
   }
 }
 
