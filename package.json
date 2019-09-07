@@ -1,0 +1,29 @@
+{
+  "private": true,
+  "name": "wordcrumbs",
+  "version": "0.1.0",
+  "main": "./src/index.ts",
+  "repository": "git@github.com:yszk0123/wordcrumbs.git",
+  "author": "Yuji Suzuki <y0suzuki0123@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "do": "ts-node src/index.ts --transpile-only"
+  },
+  "devDependencies": {
+    "@types/isomorphic-fetch": "^0.0.35",
+    "@types/jsdom": "^12.2.4",
+    "@types/kuromoji": "^0.1.0",
+    "@types/lodash": "^4.14.138",
+    "@types/node": "^12.7.4",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.6.2"
+  },
+  "dependencies": {
+    "filenamify": "^4.1.0",
+    "isomorphic-fetch": "^2.2.1",
+    "jsdom": "^15.1.1",
+    "kuromoji": "^0.1.2",
+    "lodash": "^4.17.15",
+    "make-dir": "^3.0.0"
+  }
+}
