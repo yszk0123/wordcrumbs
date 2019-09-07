@@ -1,6 +1,6 @@
 import 'isomorphic-fetch';
 import { JSDOM } from 'jsdom';
-import { uniq } from 'lodash';
+import { IpadicFeatures } from 'kuromoji';
 import makeDir from 'make-dir';
 import { tryToFetchBodyFromCacheOr } from './Cache';
 import { CACHE_DIR } from './constants';
@@ -36,7 +36,7 @@ async function main() {
 
 async function doProcess(
   tokenizer: Tokenizer,
-): Promise<Result<string[], unknown>> {
+): Promise<Result<Word[], unknown>> {
   const url = URL;
   const windowResult = await getWindowFromURL(url);
   if (isErr(windowResult)) {
@@ -50,10 +50,27 @@ async function doProcess(
   const tokens = tokenizer.tokenize(text);
   const words = tokens
     .filter(token => token.pos === TokenPos.NOUN)
-    .map(token => token.basic_form);
-  const sortedWords = uniq(words);
+    .map(getWordFromToken);
 
-  return createOk(sortedWords);
+  return createOk(words);
+}
+
+enum WordType {
+  DEFAULT,
+  HIGHLIGHT,
+}
+
+type Word =
+  | { type: WordType.DEFAULT; value: string }
+  | { type: WordType.HIGHLIGHT; value: string };
+
+function getWordFromToken(token: IpadicFeatures): Word {
+  switch (token.pos) {
+    case TokenPos.NOUN:
+      return { type: WordType.HIGHLIGHT, value: token.basic_form };
+    default:
+      return { type: WordType.DEFAULT, value: token.basic_form };
+  }
 }
 
 async function getWindowFromURL(url: string): Promise<Result<Window, unknown>> {
