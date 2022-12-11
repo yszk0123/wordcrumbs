@@ -22,7 +22,7 @@
     "typescript": "^3.6.2"
   },
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "filenamify": "^4.1.0",
     "isomorphic-fetch": "^2.2.1",
     "jsdom": "^15.1.1",
